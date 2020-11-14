@@ -28,14 +28,14 @@ public class VendorController {
 	// Get all vendors
 	
 	@GetMapping("/")
-	public List<Vendor> getAll() {
+	public List<Vendor> getAllVendors() {
 		return vendorRepo.findAll();
 	}
 	
 	// Get a vendor by id
 	
 		@GetMapping("/{id}")
-		public Optional<Vendor> getById(@PathVariable int id) {
+		public Optional<Vendor> getVendorById(@PathVariable int id) {
 			return vendorRepo.findById(id);
 		}
 		
@@ -58,7 +58,7 @@ public class VendorController {
 		// Delete a Vendor
 		
 		@DeleteMapping("/{id}")
-		public Vendor deleteUser(@PathVariable int id) {
+		public Vendor deleteVendor(@PathVariable int id) {
 			// Optional type will wrap a vendor
 			Optional<Vendor> v = vendorRepo.findById(id);
 			// isPresent() will return true if a vendor was found
