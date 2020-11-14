@@ -51,7 +51,7 @@ public class LineItemController {
 		if(l.isPresent()) {
 			lineItemRepo.deleteById(id);
 		} else {
-		System.out.println("cannot find" + id + "to delete");
+		System.out.println("Error - cannot find line item" + id + "to delete");
 		}
 	return l.get();
 	}
