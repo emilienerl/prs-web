@@ -38,22 +38,63 @@ public class RequestController {
 	public Optional<Request> getRequestById(@PathVariable int id) {
 		return requestRepo.findById(id);
 	}
-
-	// Add a request
 	
-	@PostMapping("/")
-	public Request addRequest(@RequestBody Request r) {
-		r = requestRepo.save(r);
-		return r;
-	}
-
-	// Update a request
+	// Review list of requests by id
 	
-	@PutMapping("/")
-	public Request updateRequest(@RequestBody Request r) {
-		r = requestRepo.save(r);
-		return r;
-	}
+	 @GetMapping("/requests/list-review/{id}")
+	 	public List<Request> getAllRequestsByIdAndStatus(@PathVariable int id ) {
+		 	return requestRepo.findByUserIdNotAndStatus(id, "Review");
+	 }
+
+	// Add a Request
+		@PostMapping("/")
+		public Request addRequest(@RequestBody Request r)
+		{	
+			if(r != null)
+			{
+				System.out.println("New request created");
+				System.out.println("Total price =: " + r.getTotal());
+				return requestRepo.save(r);
+			}
+			else
+			{
+				System.out.println("No request added");
+				return null;
+			}
+		}
+	
+
+		// Set a Request to be under review
+		@PutMapping("/review")
+		public Request SetRequests(@RequestBody Request r)
+		{
+			if(r.getTotal() > 50.00)
+			{
+				r.setStatus("Review");
+				r.setSubmittedDate(java.time.LocalDateTime.now().toString());
+				return requestRepo.save(r);
+			}
+			else
+				return SetApproved(r);
+		}
+		
+		// Set a Request to be approved
+		
+		@PutMapping("/approve")
+		public Request SetApproved(@RequestBody Request r)
+		{
+			r.setStatus("Approved");
+			return requestRepo.save(r);
+		}
+		
+		// Set a Request to be rejected
+		
+		@PutMapping("/reject")
+		public Request SetRejected(@RequestBody Request r)
+		{
+			r.setStatus("Rejected");
+			return requestRepo.save(r);
+		}
 
 	// Delete a request
 	
@@ -69,5 +110,4 @@ public class RequestController {
 		}
 		return r.get();
 	}
-
 }

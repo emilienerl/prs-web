@@ -1,8 +1,6 @@
 package com.prs.business;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,28 +10,32 @@ public class Request {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private int id;
+		
 		@ManyToOne
-		@JoinColumn(name = "UserID")
+		@JoinColumn(name = "UserId")
 		private User user;
+		
 		private String description;
 		private String justification;
 		private LocalDate dateNeeded;
 		private String deliveryMode;
-		private String Status;
+		private String status;
 		private double total;
-		private LocalDateTime submittedDate;
+		private String submittedDate;
 		private String reasonForRejection;
+		
 		
 		// Open Constructor
 		
 		public Request() {
-			super();
+			status = "new";
+			submittedDate = java.time.LocalDateTime.now().toString();
 		}
 		
 		//Constructors
 
 		public Request(int id, User user, String description, String justification, LocalDate dateNeeded,
-				String deliveryMode, String status, double total, LocalDateTime submittedDate,
+				String deliveryMode, String status, double total, String submittedDate,
 				String reasonForRejection) {
 			super();
 			this.id = id;
@@ -42,10 +44,15 @@ public class Request {
 			this.justification = justification;
 			this.dateNeeded = dateNeeded;
 			this.deliveryMode = deliveryMode;
-			Status = status;
+			this.status = status;
 			this.total = total;
 			this.submittedDate = submittedDate;
 			this.reasonForRejection = reasonForRejection;
+			
+			if (status.equals(""))
+				status = "new";
+			if(submittedDate.equals(""));
+				submittedDate = java.time.LocalDateTime.now().toString();
 		}
 
 		//Getter and Setters
@@ -99,11 +106,12 @@ public class Request {
 		}
 
 		public String getStatus() {
-			return Status;
+			return status;
 		}
 
 		public void setStatus(String status) {
-			Status = status;
+			if(!status.equals(""))
+				this.status = status;
 		}
 
 		public double getTotal() {
@@ -114,12 +122,13 @@ public class Request {
 			this.total = total;
 		}
 
-		public LocalDateTime getSubmittedDate() {
+		public String getSubmittedDate() {
 			return submittedDate;
 		}
 
-		public void setSubmittedDate(LocalDateTime submittedDate) {
-			this.submittedDate = submittedDate;
+		public void setSubmittedDate(String submittedDate) {
+			if(!submittedDate.equals(""))
+				this.submittedDate = submittedDate;
 		}
 
 		public String getReasonForRejection() {
