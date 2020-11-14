@@ -31,7 +31,7 @@ public class UserController {
 	//get all users
 	
 		@GetMapping("/")
-		public List<User> getAll() {
+		public List<User> getAllUsers() {
 			return userRepo.findAll();
 		}
 		
@@ -39,7 +39,7 @@ public class UserController {
 		//get user by id
 		
 		@GetMapping("/{id}")
-		public Optional<User> getById(@PathVariable int id) {
+		public Optional<User> getUserById(@PathVariable int id) {
 			return userRepo.findById(id);
 		}
 		
