@@ -28,14 +28,14 @@ public class RequestController {
 	// Get all requests
 	
 	@GetMapping("/")
-	public List<Request> getAll() {
+	public List<Request> getAllRequests() {
 		return requestRepo.findAll();
 	}
 
 	// Get a request by id
 	
 	@GetMapping("/{id}")
-	public Optional<Request> getById(@PathVariable int id) {
+	public Optional<Request> getRequestById(@PathVariable int id) {
 		return requestRepo.findById(id);
 	}
 
