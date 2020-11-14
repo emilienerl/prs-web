@@ -28,14 +28,14 @@ public class ProductController {
 	// Get all products
 	
 	@GetMapping("/")
-	public List<Product> getAll() {
+	public List<Product> getAllProducts() {
 		return productRepo.findAll();
 	}
 
 	// Get a product by id
 	
 	@GetMapping("/{id}")
-	public Optional<Product> getById(@PathVariable int id) {
+	public Optional<Product> getProductById(@PathVariable int id) {
 		return productRepo.findById(id);
 	}
 
