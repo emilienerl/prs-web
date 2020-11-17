@@ -77,12 +77,16 @@ public class RequestController {
 			}
 			return r.get();
 		}
-
+		
+		@PutMapping("/")
+		private Request putRequest(@RequestBody Request r) {
+			return requestRepo.save(r);
+		}
 	
 
 		// Set a Request to be under review for $50
 		@PutMapping("/review")
-		public Request SetRequests(@RequestBody Request r)
+		public Request setRequestsToBeReviewed(@RequestBody Request r)
 		{
 			if(r.getTotal() >= 50.00)
 			{
@@ -90,7 +94,7 @@ public class RequestController {
 			} else {
 				r.setStatus("Approved");
 			}
-				r.setSubmittedDate(java.time.LocalDateTime.now().toString());
+				r.setSubmittedDate(java.time.LocalDateTime.now());
 				return requestRepo.save(r);
 			
 		}

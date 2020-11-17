@@ -1,12 +1,15 @@
 package com.prs.business;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
 public class Request {
 	
 	// Fields
+	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private int id;
@@ -21,7 +24,7 @@ public class Request {
 		private String deliveryMode;
 		private String status;
 		private double total;
-		private String submittedDate;
+		private LocalDateTime submittedDate;
 		private String reasonForRejection;
 		
 		
@@ -29,13 +32,13 @@ public class Request {
 		
 		public Request() {
 			status = "new";
-			submittedDate = java.time.LocalDateTime.now().toString();
+			submittedDate = java.time.LocalDateTime.now();
 		}
 		
 		//Constructors
 
 		public Request(int id, User user, String description, String justification, LocalDate dateNeeded,
-				String deliveryMode, String status, double total, String submittedDate,
+				String deliveryMode, String status, double total, LocalDateTime submittedDate,
 				String reasonForRejection) {
 			super();
 			this.id = id;
@@ -49,13 +52,9 @@ public class Request {
 			this.submittedDate = submittedDate;
 			this.reasonForRejection = reasonForRejection;
 			
-			if (status.equals(""))
-				status = "new";
-			if(submittedDate.equals(""));
-				submittedDate = java.time.LocalDateTime.now().toString();
 		}
 
-		//Getter and Setters
+		// Getters & Setters
 		
 		public int getId() {
 			return id;
@@ -110,8 +109,7 @@ public class Request {
 		}
 
 		public void setStatus(String status) {
-			if(!status.equals(""))
-				this.status = status;
+			this.status = status;
 		}
 
 		public double getTotal() {
@@ -122,13 +120,12 @@ public class Request {
 			this.total = total;
 		}
 
-		public String getSubmittedDate() {
+		public LocalDateTime getSubmittedDate() {
 			return submittedDate;
 		}
 
-		public void setSubmittedDate(String submittedDate) {
-			if(!submittedDate.equals(""))
-				this.submittedDate = submittedDate;
+		public void setSubmittedDate(LocalDateTime submittedDate) {
+			this.submittedDate = submittedDate;
 		}
 
 		public String getReasonForRejection() {
@@ -139,8 +136,4 @@ public class Request {
 			this.reasonForRejection = reasonForRejection;
 		}
 		
-		
-		
-		
-
-}
+	}

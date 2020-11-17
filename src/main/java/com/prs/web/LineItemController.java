@@ -56,5 +56,11 @@ public class LineItemController {
 		}
 	return l.get();
 	}
+	
+	// Get all LineItems by request ID
+		@GetMapping("/lines-for-pr/{id}")
+		public List<LineItem> getAllLineItemsByRequestId(@PathVariable int id) {
+			return lineItemRepo.findByRequestId(id);
 
+}
 }
