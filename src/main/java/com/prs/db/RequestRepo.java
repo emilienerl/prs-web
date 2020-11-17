@@ -8,6 +8,7 @@ import com.prs.business.Request;
 
 public interface RequestRepo extends JpaRepository<Request, Integer> {
 
+	// finds all requests by user status and not by ID
 	List<Request> findByUserIdNotAndStatus(int id, String status);
 
 }

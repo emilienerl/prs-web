@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -74,25 +73,14 @@ public class UserController {
 			return u.get();
 		}
 	
-		// login request param
-		@GetMapping("/login")
-		public Optional<User> login(@RequestParam String userName, @RequestParam String password) {
-			Optional <User> u = userRepo.findByUserNameAndPassword(userName, password);
-			if (u.isPresent()) {
-				return u;
-			} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		// Post Mapping - Get User by Username and Password
+				@PostMapping("/login")
+				public Optional<User> login(@RequestBody User u) {
+					Optional<User> user = userRepo.findByUserNameAndPassword(u.getUserName(), u.getPassword());
+					if(user.isPresent()) {
+						return user;
+					} else {
+						throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+					}		
+				}
 		}
-		}
-		
-		// login via POST
-		@GetMapping("/login")
-		public Optional<User> login(@RequestParam User u) {
-			Optional <User> user = userRepo.findByUserNameAndPassword(u.getUserName(), u.getPassword());
-			if (user.isPresent()) {
-				return user;
-			} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-}
-		}
-}

@@ -62,52 +62,55 @@ public class RequestController {
 				return null;
 			}
 		}
+		
+		// Delete a request
+		
+		@DeleteMapping("/{id}")
+		public Request deleteRequest(@PathVariable int id) {
+			// Optional type will wrap a request
+			Optional<Request> r = requestRepo.findById(id);
+			// isPresent() will return true if a request was found
+			if (r.isPresent()) {
+				requestRepo.deleteById(id);
+			} else {
+				System.out.println("Error - request not found for id " + id);
+			}
+			return r.get();
+		}
+
 	
 
-		// Set a Request to be under review
+		// Set a Request to be under review for $50
 		@PutMapping("/review")
 		public Request SetRequests(@RequestBody Request r)
 		{
-			if(r.getTotal() > 50.00)
+			if(r.getTotal() >= 50.00)
 			{
 				r.setStatus("Review");
+			} else {
+				r.setStatus("Approved");
+			}
 				r.setSubmittedDate(java.time.LocalDateTime.now().toString());
 				return requestRepo.save(r);
-			}
-			else
-				return SetApproved(r);
+			
 		}
 		
 		// Set a Request to be approved
 		
 		@PutMapping("/approve")
-		public Request SetApproved(@RequestBody Request r)
-		{
+		public Request approveRequest(@RequestBody Request r) {
 			r.setStatus("Approved");
-			return requestRepo.save(r);
+			r = requestRepo.save(r);
+			return r;
 		}
 		
 		// Set a Request to be rejected
 		
 		@PutMapping("/reject")
-		public Request SetRejected(@RequestBody Request r)
-		{
-			r.setStatus("Rejected");
-			return requestRepo.save(r);
+		public Request rejectRequest(@RequestBody Request r) {
+				r.setStatus("Rejected");
+				r = requestRepo.save(r);
+				return r;
 		}
-
-	// Delete a request
-	
-	@DeleteMapping("/{id}")
-	public Request deleteRequest(@PathVariable int id) {
-		// Optional type will wrap a request
-		Optional<Request> r = requestRepo.findById(id);
-		// isPresent() will return true if a request was found
-		if (r.isPresent()) {
-			requestRepo.deleteById(id);
-		} else {
-			System.out.println("Error - request not found for id " + id);
-		}
-		return r.get();
-	}
 }
+	
