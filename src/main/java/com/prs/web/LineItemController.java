@@ -81,7 +81,7 @@ public class LineItemController {
 		return lineItemRepo.findByRequestId(id);
 	}
 	
-	// Recalculates the Requests total based on CRUD functions LineItem Add, Update or Delete
+	//Method Recalculates the Requests total based on CRUD functions LineItem Add, Update or Delete
 	public void recalculateTotal(LineItem litem) {	
 		List<LineItem> lineItems = lineItemRepo.findByRequestId(litem.getRequest().getId());
 		
