@@ -44,7 +44,7 @@ public class LineItemController {
 		return lineItemRepo.findById(id);
 	}
 	
-	// Add a LineItem
+	// Add a LineItem and recalculate total
 	@PostMapping("/")
 	public LineItem addLineItem(@RequestBody LineItem litem) {
 		litem = lineItemRepo.save(litem);
@@ -52,7 +52,7 @@ public class LineItemController {
 		return litem;
 	}
 	
-	// Update a LineItem
+	// Update a LineItem and recalculate total
 	@PutMapping("/")
 	public LineItem updateLineItem(@RequestBody LineItem litem) {
 		litem = lineItemRepo.save(litem);
@@ -61,7 +61,7 @@ public class LineItemController {
 		return litem;
 	}
 	
-	// Delete a LineItem by id
+	// Delete a LineItem by id and recalculate total
 	@DeleteMapping("{id}")
 	public LineItem deleteLineItem(@PathVariable int id) {
 		Optional<LineItem> litem = lineItemRepo.findById(id);
